@@ -1,7 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useReducer, useContext } from "react";
+import {
+  addCartAction,
+  EcomContext,
+} from "../store";
 
-export default function ItemDetail({ item, addToCart }) {
+
+
+export default function ItemDetail() {
+  const {store, dispatch} = useContext(EcomContext);
   const [quantity, setQuantity] = useState(1);
+  const {items, currentItemIndex} = store;
+  const item = items[currentItemIndex];
 
   if (!item) {
     return <div></div>;
@@ -12,7 +21,7 @@ export default function ItemDetail({ item, addToCart }) {
   };
 
   const detailAddCart = () => {
-    addToCart(item, quantity);
+    dispatch(addCartAction(item, quantity));
   };
 
   return (

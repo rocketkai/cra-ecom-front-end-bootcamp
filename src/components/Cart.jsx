@@ -1,7 +1,21 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState, useReducer, useContext } from "react";
 
-export default function Cart({ items, emptyCart }) {
+import {
+  removeCartAction,
+  emptyCartAction,
+  EcomContext,
+  createOrder
+} from "../store";
+
+export default function Cart() {
+
+  // initialize the store from the context provider
+  const {store, dispatch} = useContext(EcomContext);
+
+  // the cart context state data is defined in the initial state and the reducer
+  // rename cart in this context - it's items
+  const {cart:items} = store;
+
   const [orderId, setOrderId] = useState(null);
 
   if (items.length === 0) {
@@ -34,13 +48,18 @@ export default function Cart({ items, emptyCart }) {
     return { subTotal, gst, total };
   };
 
-  const createOrder = () => {
+  const handleOrderClick = () => {
     const { total } = calculateTotals(items);
     const order = { total, items };
-    axios.post('/orders', order).then((result) => {
-      setOrderId(result.data.order.id);
-      emptyCart();
-      console.log(result);
+
+    // when the user selects an item, dispatch the event and set the
+    // data. this will trigger a rerender b/c the data is in Context
+
+    // this function returns a promise so that we can set the state
+    // inside this component when the request is done and
+    // we have the databse id of the order.
+    createOrder( dispatch, order ).then((orderId)=>{
+      setOrderId(orderId);
     });
   };
 
@@ -74,7 +93,7 @@ export default function Cart({ items, emptyCart }) {
           </h2>
         </div>
         <div>
-          <button type="button" onClick={createOrder}>Create Order</button>
+          <button type="button" onClick={handleOrderClick}>Create Order</button>
         </div>
       </div>
     </div>
