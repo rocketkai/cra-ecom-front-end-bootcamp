@@ -55,9 +55,6 @@ export default function Cart() {
     // when the user selects an item, dispatch the event and set the
     // data. this will trigger a rerender b/c the data is in Context
 
-    // this function returns a promise so that we can set the state
-    // inside this component when the request is done and
-    // we have the databse id of the order.
     createOrder( dispatch, order ).then((orderId)=>{
       setOrderId(orderId);
     });

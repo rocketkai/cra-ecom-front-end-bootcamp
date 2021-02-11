@@ -134,10 +134,8 @@ export function loadItems(dispatch){
 }
 
 export function createOrder(dispatch, order){
-  return new Promise((resolve, reject) => {
-    axios.post(BACKEND_URL+'/orders', order).then((result) => {
-      dispatch(emptyCartAction());
-      resolve(result.data.order.id);
-    });
+  return axios.post(BACKEND_URL+'/orders', order).then((result) => {
+    dispatch(emptyCartAction());
+    return result.data.order.id;
   });
 }
