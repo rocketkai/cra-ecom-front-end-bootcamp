@@ -1,10 +1,15 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+
 
 export default function ItemDetail({ item, addToCart }) {
   const [quantity, setQuantity] = useState(1);
 
+  // create a hook to use when the logic says to change components
+  const history = useHistory();
+
   if (!item) {
-    return <div></div>;
+    return <div>Selected Item</div>;
   }
 
   const handleSelectChange = (event) => {
@@ -12,6 +17,8 @@ export default function ItemDetail({ item, addToCart }) {
   };
 
   const detailAddCart = () => {
+    // when the user ads to cart take them to the cart
+    history.push("/cart");
     addToCart(item, quantity);
   };
 
