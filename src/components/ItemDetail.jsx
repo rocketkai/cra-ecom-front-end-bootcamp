@@ -1,12 +1,21 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useHistory, useParams } from "react-router-dom";
 
 
-export default function ItemDetail({ item, addToCart }) {
+export default function ItemDetail({ item, addToCart, location, onDeepLink }) {
   const [quantity, setQuantity] = useState(1);
 
   // create a hook to use when the logic says to change components
   const history = useHistory();
+  let { id } = useParams();
+
+  useEffect(()=>{
+    if( !item ){
+      // we have access to the current param inside of ItemDetail
+      // pass it back to App so that the index can be set
+      onDeepLink(id);
+    }
+  },[]);
 
   if (!item) {
     return <div>Selected Item</div>;

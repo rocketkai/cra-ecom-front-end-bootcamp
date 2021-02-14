@@ -1,6 +1,6 @@
 import './App.css';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import {
   BrowserRouter as Router,
@@ -22,6 +22,17 @@ export default function App() {
   const [cart, setCart] = useState([]);
   const [selectedItemIndex, setSelectedItem] = useState();
 
+  useEffect(()=>{
+    axios.get(BACKEND_URL+'/items').then((result) => {
+      console.log(result);
+      setItems(result.data.items);
+    });
+  },[]);
+
+  const onDeepLink = (itemIndex) => {
+    setSelectedItem(itemIndex);
+  };
+
   const addToCart = (item, quantity) => {
     const cartItem = { quantity, ...item };
     setCart([cartItem, ...cart]);
@@ -33,13 +44,6 @@ export default function App() {
 
   const setItemDetail = (itemIndex) => {
     setSelectedItem(itemIndex);
-  };
-
-  const getItems = () => {
-    axios.get(BACKEND_URL+'/items').then((result) => {
-      console.log(result);
-      setItems(result.data.items);
-    });
   };
 
   const selectedItem = items[selectedItemIndex];
@@ -68,17 +72,12 @@ export default function App() {
           <Switch>
             {/* give the route matching path in order of matching precedence */}
             <Route path="/items/:id">
-              <ItemDetail item={selectedItem} addToCart={addToCart} />
+              <ItemDetail item={selectedItem} addToCart={addToCart} onDeepLink={onDeepLink} />
             </Route>
             <Route path="/cart">
               <Cart items={cart} emptyCart={emptyCart} />
             </Route>
             <Route path="/">
-              {items.length === 0 && (
-                <button type="button" onClick={getItems}>
-                  Get Items
-                </button>
-              )}
               <Items items={items} setItemDetail={setItemDetail} selectedItemIndex={selectedItemIndex} />
             </Route>
           </Switch>
