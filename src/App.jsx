@@ -28,7 +28,7 @@ export default function App() {
   };
 
   const getItems = () => {
-    axios.get(BACKEND_URL+'/items').then((result) => {
+    axios.get(`${BACKEND_URL}/items`).then((result) => {
       console.log(result);
       setItems(result.data.items);
     });
