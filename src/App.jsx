@@ -7,7 +7,7 @@ import Cart from './components/Cart.jsx';
 import Items from './components/Items.jsx';
 import ItemDetail from './components/ItemDetail.jsx';
 
-const BACKEND_URL = 'http://localhost:3002';
+const REACT_APP_BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:3004';
 
 export default function App() {
   const [items, setItems] = useState([]);
@@ -28,7 +28,7 @@ export default function App() {
   };
 
   const getItems = () => {
-    axios.get(`${BACKEND_URL}/items`).then((result) => {
+    axios.get(`${REACT_APP_BACKEND_URL}/items`).then((result) => {
       console.log(result);
       setItems(result.data.items);
     });
