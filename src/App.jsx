@@ -2,6 +2,8 @@ import './App.css';
 
 import React, { useState } from 'react';
 import axios from 'axios';
+// make sure that axios always sends the cookies to the backend server
+axios.defaults.withCredentials = true;
 
 import Cart from './components/Cart.jsx';
 import Items from './components/Items.jsx';
