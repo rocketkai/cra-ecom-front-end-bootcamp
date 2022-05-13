@@ -1,21 +1,22 @@
-import './App.css';
+import "./App.css";
 
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 
-import Cart from './components/Cart.jsx';
-import Items from './components/Items.jsx';
-import ItemDetail from './components/ItemDetail.jsx';
+import Cart from "./components/Cart.jsx";
+import Items from "./components/Items.jsx";
+import ItemDetail from "./components/ItemDetail.jsx";
 
 // make sure that axios always sends the cookies to the backend server
 axios.defaults.withCredentials = true;
 
-const REACT_APP_BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:3004';
+const REACT_APP_BACKEND_URL =
+  process.env.REACT_APP_BACKEND_URL || "http://localhost:3004";
 
 export default function App() {
   const [items, setItems] = useState([]);
   const [cart, setCart] = useState([]);
-  const [selectedItemIndex, setSelectedItem] = useState();
+  const [selectedItemIndex, setSelectedItemIndex] = useState();
 
   const addToCart = (item, quantity) => {
     const cartItem = { quantity, ...item };
@@ -27,7 +28,7 @@ export default function App() {
   };
 
   const setItemDetail = (itemIndex) => {
-    setSelectedItem(itemIndex);
+    setSelectedItemIndex(itemIndex);
   };
 
   const getItems = () => {
