@@ -10,7 +10,7 @@ import ItemDetail from "./components/ItemDetail.jsx";
 // make sure that axios always sends the cookies to the backend server
 axios.defaults.withCredentials = true;
 
-const REACT_APP_BACKEND_URL =
+const BACKEND_URL =
   process.env.REACT_APP_BACKEND_URL || "http://localhost:3004";
 
 export default function App() {
@@ -32,7 +32,7 @@ export default function App() {
   };
 
   const getItems = () => {
-    axios.get(`${REACT_APP_BACKEND_URL}/items`).then((result) => {
+    axios.get(`${BACKEND_URL}/items`).then((result) => {
       console.log(result);
       setItems(result.data.items);
     });
