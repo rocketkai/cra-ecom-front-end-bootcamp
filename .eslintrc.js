@@ -39,8 +39,8 @@ module.exports = {
     // Allow function param reassign for array or object elements or properties
     'no-param-reassign': ['error', { props: false }],
 
-    // Only warn for prop type violations because we haven't learned about prop types yet.
-    'react/prop-types': 'warn',
+    // Disable prop type violations because we haven't learned about prop types yet.
+    'react/prop-types': 'off',
     // TODO: Fix the no shadow warning in starter code so we can treat it as an error.
     'no-shadow': 'warn',
   },
